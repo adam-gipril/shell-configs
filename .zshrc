@@ -15,6 +15,10 @@ zinit light Aloxaf/fzf-tab
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Install the "pure" theme
+zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+zinit light sindresorhus/pure
+
 # --------------------------------------------------------------------------------------------------
 # Aliases - Basic
 # --------------------------------------------------------------------------------------------------
