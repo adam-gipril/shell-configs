@@ -1,6 +1,6 @@
-# --------------------------------------------------------------------------------------------------
-# Setup
-# --------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
+# Z-Shell ZI https://z.digitalclouds.dev/ 
+# ----------------------------------------------------------------------------------------------------------------------
 
 if [[ ! -f $HOME/.zi/bin/zi.zsh ]]; then
   print -P "%F{33}▓▒░ %F{160}Installing (%F{33}z-shell/zi%F{160})…%f"
@@ -9,11 +9,16 @@ if [[ ! -f $HOME/.zi/bin/zi.zsh ]]; then
     print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
     print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
+
 source "$HOME/.zi/bin/zi.zsh"
 autoload -Uz _zi
 (( ${+_comps} )) && _comps[zi]=_zi
-# examples here -> https://z.digitalclouds.dev/docs/ecosystem/annexes
+
 zicompinit # <- https://z.digitalclouds.dev/docs/guides/commands
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Setup
+# ----------------------------------------------------------------------------------------------------------------------
 
 # Set up rbenv in your shell. See https://github.com/rbenv/rbenv#how-rbenv-hooks-into-your-shell
 eval "$(rbenv init -)"
@@ -22,26 +27,29 @@ eval "$(rbenv init -)"
 eval $(/opt/homebrew/bin/brew shellenv)
 
 # Set up terraform autocomplete (automatically installed by `terraform -install-autocomplete`)
-autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
 
-# Set up fzf and fzf-tab for a better autocomplete experience
-zi light z-shell/z-a-bin-gem-node
+# Set up fzf and fzf-tab for a better autocomplete experience (fzf needs to be installed separately)
+# https://github.com/junegunn/fzf
+# https://github.com/Aloxaf/fzf-tab
+zi light z-shell/z-a-bin-gem-node # Dependency of fzf
 zi pack'bgn' for fzf
 zi light Aloxaf/fzf-tab
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Install the "pure" theme
+# Install the "pure" theme https://z.digitalclouds.dev/docs/gallery/collection/themes/#thp-sindresorhuspure
 zi ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
 zi light sindresorhus/pure
 
+# Install ASDF version manager 
 zi snippet OMZP::asdf/asdf.plugin.zsh
 
-# --------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
 # Aliases - Basic
-# --------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
 
+# M1 Mac Homebrew alias
 alias bru='arch -arm64 brew'
 
 # Enables opening a file or directory in VSCode with `c <path-to-file-or-directory>`
@@ -76,9 +84,9 @@ alias t='touch'
 # Shorten `rm -rf` to more conveniently delete entire directories
 alias rf='rm -rf'
 
-# --------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
 # Aliases & Functions - Git
-# --------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
 
 alias g='git'
 alias ga='g add .'
@@ -129,9 +137,9 @@ gri() {
   g rebase -i HEAD~$1
 }
 
-# --------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
 # Aliases - Node
-# --------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
 
 alias n='npm'
 alias na='n audit'
@@ -152,9 +160,9 @@ alias nvp='nv patch'
 # List all packages installed with npm globally
 alias nls='n list -g --depth 0'
 
-# --------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
 # Aliases - Web V2/Vue
-# --------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
 
 # Open pando-vue or web-v2 with VSCode
 alias cpv='c ~/Developer/pando-vue'
@@ -169,18 +177,18 @@ alias nss='nr storybook:serve -- --ci'
 # Run only the test at the passed-in path
 alias ntf='nr test:jest -- --runTestsByPath'
 
-# --------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
 # Aliases - saml2aws
-# --------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
 
 alias sal='saml2aws login \
             --role=<role-arn-here> \
             --session-duration=43200 \
             --skip-prompt'
 
-# --------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
 # Auto-use NVM
-# --------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
 
 autoload -U add-zsh-hook
 load-nvmrc() {
