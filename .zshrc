@@ -10,6 +10,9 @@ if [[ ! -f $HOME/.zi/bin/zi.zsh ]]; then
     print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
+autoload bashcompinit
+bashcompinit
+
 source "$HOME/.zi/bin/zi.zsh"
 autoload -Uz _zi
 (( ${+_comps} )) && _comps[zi]=_zi
